@@ -11,8 +11,10 @@ class game{
     var hp_packs = (1..3).random()
     fun Game(player:plr) {
         var enemy = plr(enemy, hp)
+        player.health = if(rand_ch(1,10) == 5) 125 else 100
         println("Welcome ${player.name} to this very epic dungeon game")
         TimeUnit.SECONDS.sleep(2L)
+        if(player.health == 125) println("\nyou're lucky! you just got 25+ hp!")
         println("\nOH SHIT A WILD ${enemy.name?.toUpperCase()} APPEARS!")
         TimeUnit.SECONDS.sleep(2L)
         println("\nGET READY FOR THE FIGHT ${player.name?.toUpperCase()}")
@@ -82,7 +84,7 @@ class game{
             attack()
             println("_".repeat(30))
         }
-        } while(enemy.health < 0 || player.health < 0)
+        } while(enemy.health > 0 && player.health > 0)
         if(player.health <= 0 && player.health < enemy.health){
             println("you have lost!")
         } else if(player.health <= 0 && player.health > enemy.health){

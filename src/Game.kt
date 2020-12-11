@@ -15,6 +15,7 @@ class game{
         println("Welcome ${player.name} to this very epic dungeon game")
         TimeUnit.SECONDS.sleep(2L)
         if(player.health == 125) println("\nyou're lucky! you just got 25+ hp!")
+        TimeUnit.SECONDS.sleep(2L)
         println("\nOH SHIT A WILD ${enemy.name?.toUpperCase()} APPEARS!")
         TimeUnit.SECONDS.sleep(2L)
         println("\nGET READY FOR THE FIGHT ${player.name?.toUpperCase()}")

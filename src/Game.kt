@@ -82,7 +82,7 @@ class game{
             attack()
             println("_".repeat(30))
         }
-        } while(enemy.health > 0 || player.health > 0)
+        } while(enemy.health < 0 || player.health < 0)
         if(player.health <= 0 && player.health < enemy.health){
             println("you have lost!")
         } else if(player.health <= 0 && player.health > enemy.health){

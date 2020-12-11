@@ -18,7 +18,7 @@ class game{
         println("\nGET READY FOR THE FIGHT ${player.name?.toUpperCase()}")
         TimeUnit.SECONDS.sleep(3L)
         fun attack():String? {
-            println("\n\n${enemy.name}'s health: ${enemy.health}, ${player.name}'s health\n(\"choose from the numbers below\")")
+            println("\n\n${enemy.name}'s health: ${enemy.health}, ${player.name}'s health: ${player.health}\n(\"choose from the numbers below\")")
             println("1.do a basic attack\n2.do a special attack  \"(1/6) chace of it working\"\n3.heal up (current health packs = $hp_packs)\n: ")
             var ch = readLine()
             return ch
@@ -31,23 +31,40 @@ class game{
         if(choice == "1") {
             TimeUnit.SECONDS.sleep(1L)
             enemy.health -= 15
-            println("\ndoing a basic attack of 15!\n${enemy.name}'s health is now ${enemy.health}")
-            player.health -= rand_ch(10, 25)
-            println("${enemy.name} attacks!\nyour health is now ${player.health}!")
+            println("_".repeat(30))
+            println("\ndoing a basic attack of 15! ${enemy.name}'s health is now ${enemy.health}")
+            println("${enemy.name} Attacks!")
+            var rand = rand_ch(1,6)
+            if(rand == 3){
+                println("${enemy.name} missed!")
+            } else {
+                player.health -= rand_ch(10, 20)
+                println("${enemy.name} managed to hit you!\nyour health is now ${player.health}!")
+            }
+            println("_".repeat(30))
         } else if(choice == "2") {
+            println("_".repeat(30))
             TimeUnit.SECONDS.sleep(1L)
             println("trying a special attack!")
             TimeUnit.SECONDS.sleep(1L)
             if ((1..6).random() == 6) {
-                println("special attack worked!\n decreasing the enemy's health by 35!")
-                enemy.health -= 35
+                println("special attack worked!\ndecreasing the enemy's health by 40!")
+                enemy.health -= 40
             } else {
                 TimeUnit.SECONDS.sleep(1L)
                 println("Attack Failed!")
-                player.health -= rand_ch(10, 25)
-                println("${enemy.name} attacks!\n your health is now ${player.health}!")
+                println("${enemy.name} Attacks!")
+                var rand = rand_ch(1,6)
+                if(rand == 3){
+                    println("${enemy.name} missed!")
+                } else {
+                    player.health -= rand_ch(10, 20)
+                    println("${enemy.name} managed to hit you!\nyour health is now ${player.health}!")
+                }
+                println("_".repeat(30))
             }
             } else if(choice == "3") {
+            println("_".repeat(30))
             TimeUnit.SECONDS.sleep(1L)
             if(hp_packs > 0){
                 println("Healing up by 25!")
@@ -57,16 +74,21 @@ class game{
             } else {
                 println("you don't have enough health packs!")
             }
+            println("_".repeat(30))
         } else {
+            println("_".repeat(30))
             println("Invalid option!")
             TimeUnit.SECONDS.sleep(2L)
             attack()
+            println("_".repeat(30))
         }
         } while(enemy.health > 0 || player.health > 0)
-        if(player.health == 0){
+        if(player.health <= 0 && player.health < enemy.health){
             println("you have lost!")
-        } else {
+        } else if(player.health <= 0 && player.health > enemy.health){
             println("you won!")
+        } else {
+            println("you both have tied!")
         }
     }
 

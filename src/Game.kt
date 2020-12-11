@@ -12,6 +12,7 @@ class game{
     fun Game(player:plr) {
         var enemy = plr(enemy, hp)
         player.health = if(rand_ch(1,10) == 5) 125 else 100
+        TimeUnit.SECONDS.sleep(1L)
         println("Welcome ${player.name} to this very epic dungeon game")
         TimeUnit.SECONDS.sleep(2L)
         if(player.health == 125) println("\nyou're lucky! you just got 25+ hp!")
@@ -34,6 +35,10 @@ class game{
         if(choice == "1") {
             TimeUnit.SECONDS.sleep(1L)
             enemy.health -= 15
+            if(enemy.health <= 0) {
+                println("\nyou've managed to kill ${enemy.name}")
+                break
+            }
             println("_".repeat(30))
             println("\ndoing a basic attack of 15! ${enemy.name}'s health is now ${enemy.health}")
             println("${enemy.name} Attacks!")
@@ -42,6 +47,10 @@ class game{
                 println("${enemy.name} missed!")
             } else {
                 player.health -= rand_ch(10, 20)
+                if(player.health <= 0) {
+                    println("\n${enemy.name} has managed to kill you!")
+                    break
+                }
                 println("${enemy.name} managed to hit you!\nyour health is now ${player.health}!")
             }
             println("_".repeat(30))
@@ -53,6 +62,10 @@ class game{
             if ((1..6).random() == 6) {
                 println("special attack worked!\ndecreasing the enemy's health by 40!")
                 enemy.health -= 40
+                if(enemy.health <= 0) {
+                    println("\nyou've managed to kill ${enemy.name}")
+                    break
+                }
             } else {
                 TimeUnit.SECONDS.sleep(1L)
                 println("Attack Failed!")
@@ -62,6 +75,10 @@ class game{
                     println("${enemy.name} missed!")
                 } else {
                     player.health -= rand_ch(10, 20)
+                    if(player.health <= 0) {
+                        println("\n${enemy.name} has managed to kill you!")
+                        break
+                    }
                     println("${enemy.name} managed to hit you!\nyour health is now ${player.health}!")
                 }
                 println("_".repeat(30))
@@ -86,10 +103,10 @@ class game{
             println("_".repeat(30))
         }
         } while(enemy.health > 0 && player.health > 0)
-        if(player.health <= 0 && player.health < enemy.health){
+        if(player.health <= 0){
             println("you have lost!")
-        } else if(player.health <= 0 && player.health > enemy.health){
-            println("you won!")
+        } else if(enemy.health <= 0){
+            println("you've won!")
         } else {
             println("you both have tied!")
         }

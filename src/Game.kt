@@ -5,7 +5,7 @@ data class plr(val name:String?, var health:Int)
 
 class game{
     var rand_ch: (Int,Int) -> Int = {min, max -> (min..max).random()}
-    var enemy_list = listOf<String>("spider", "cyto", "goblin", "enzo", "el0xren", "boss cyto", "boss el0xren", "boss enzo", "boss goblin", "boss spider")
+    var enemy_list = listOf<String>("spider", "cyto", "goblin", "enzo", "el0xren", "boss cyto", "boss el0xren", "boss enzo", "boss goblin", "boss spider", "ahmed", "boss ahmed")
     val enemy = enemy_list.random()
     var hp = if("boss" in enemy) (150..200).random() else 100
     var hp_packs = (1..3).random()
@@ -21,9 +21,10 @@ class game{
         TimeUnit.SECONDS.sleep(2L)
         println("\nGET READY FOR THE FIGHT ${player.name?.toUpperCase()}")
         TimeUnit.SECONDS.sleep(3L)
+        var special_attack = 6
         fun attack():String? {
             println("\n\n${enemy.name}'s health: ${enemy.health}, ${player.name}'s health: ${player.health}\n(\"choose from the numbers below\")")
-            println("1.do a basic attack\n2.do a special attack  \"(1/6) chace of it working\"\n3.heal up (current health packs = $hp_packs)\n: ")
+            println("1.do a basic attack\n2.do a special attack \"has a (1/$special_attack) chance of working\"\n3.heal up (current health packs = $hp_packs)\n: ")
             var ch = readLine()
             return ch
         }
@@ -59,7 +60,9 @@ class game{
             TimeUnit.SECONDS.sleep(1L)
             println("trying a special attack!")
             TimeUnit.SECONDS.sleep(1L)
-            if ((1..6).random() == 6) {
+            var worked:Boolean = false
+            if ((1..special_attack).random() == 1) {
+                worked = true
                 println("special attack worked!\ndecreasing the enemy's health by 40!")
                 enemy.health -= 40
                 if(enemy.health <= 0) {
@@ -69,6 +72,7 @@ class game{
             } else {
                 TimeUnit.SECONDS.sleep(1L)
                 println("Attack Failed!")
+                worked = false
                 println("${enemy.name} Attacks!")
                 var rand = rand_ch(1,6)
                 if(rand == 3){
@@ -82,6 +86,10 @@ class game{
                     println("${enemy.name} managed to hit you!\nyour health is now ${player.health}!")
                 }
                 println("_".repeat(30))
+            }
+            when(worked){
+                true -> special_attack = 6
+                false -> special_attack -= 1
             }
             } else if(choice == "3") {
             println("_".repeat(30))
